@@ -8,6 +8,12 @@ import AuthModal from './AuthModal';
 import { useAuth } from '@/hooks/useAuth';
 import toast from 'react-hot-toast';
 
+interface RazorpayPaymentResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
 export default function CoursesSection() {
   const { isAuthenticated } = useAuth();
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -43,7 +49,7 @@ export default function CoursesSection() {
         name: 'Placement Lab',
         description: course.title,
         order_id: data.orderId,
-        handler: async (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
+        handler: async (response: RazorpayPaymentResponse) => {
           const verifyRes = await fetch('/api/payments/verify-payment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -68,7 +74,6 @@ export default function CoursesSection() {
       const script = document.createElement('script');
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       script.onload = () => {
-        // @ts-expect-error Razorpay global
         const rzp = new window.Razorpay(options);
         rzp.open();
       };

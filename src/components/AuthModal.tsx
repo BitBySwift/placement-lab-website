@@ -86,7 +86,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     setLoading(true);
     try {
       const user: User = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         phoneNumber: phone,
         name: sanitizeInput(name) || undefined,
         email: sanitizeInput(email) || undefined,

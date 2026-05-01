@@ -5,12 +5,9 @@ import { OTPResponse } from '@/types';
 const otpStore = new Map<string, { otp: string; expiresAt: number }>();
 
 export function generateOTP(length = 6): string {
-  const digits = '0123456789';
-  let otp = '';
-  for (let i = 0; i < length; i++) {
-    otp += digits[Math.floor(Math.random() * digits.length)];
-  }
-  return otp;
+  const min = Math.pow(10, length - 1);
+  const max = Math.pow(10, length) - 1;
+  return String(crypto.randomInt(min, max + 1));
 }
 
 export function storeOTP(identifier: string, otp: string, ttlMs = 10 * 60 * 1000): void {

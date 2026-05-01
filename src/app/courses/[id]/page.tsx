@@ -27,13 +27,22 @@ export default function CourseDetailPage({ params }: PageProps) {
   const course = getCourseById(params.id);
   if (!course) notFound();
 
-  const colorMap: Record<string, string> = {
-    essential: 'green',
-    professional: 'blue',
-    advanced: 'purple',
-    guaranteed: 'red',
+  const borderColorMap: Record<string, string> = {
+    essential: 'border-green-500/30',
+    professional: 'border-blue-500/30',
+    advanced: 'border-purple-500/30',
+    guaranteed: 'border-red-500/30',
   };
-  const color = colorMap[course.category] || 'green';
+
+  const badgeColorMap: Record<string, string> = {
+    essential: 'bg-green-500/20 text-green-400 border-green-500/30',
+    professional: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    advanced: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    guaranteed: 'bg-red-500/20 text-red-400 border-red-500/30',
+  };
+
+  const borderClass = borderColorMap[course.category] ?? 'border-green-500/30';
+  const badgeClass = badgeColorMap[course.category] ?? 'bg-green-500/20 text-green-400 border-green-500/30';
 
   return (
     <main>
@@ -41,10 +50,10 @@ export default function CourseDetailPage({ params }: PageProps) {
       <div className="pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className={`glass-card p-8 mb-8 border border-${color}-500/30`}>
+          <div className={`glass-card p-8 mb-8 border ${borderClass}`}>
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1">
-                <span className={`badge bg-${color}-500/20 text-${color}-400 border border-${color}-500/30 mb-4`}>
+                <span className={`badge border ${badgeClass} mb-4`}>
                   {course.badge} {course.category}
                 </span>
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">{course.title}</h1>
