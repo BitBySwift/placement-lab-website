@@ -7,6 +7,10 @@ import { type ConfirmationResult } from 'firebase/auth';
 import { useAuthStore } from '@/store/authStore';
 import { User } from '@/types';
 
+interface WindowWithRecaptcha extends Window {
+  recaptchaVerifier?: { clear: () => void };
+}
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
@@ -46,9 +50,9 @@ export default function AuthModal({ isOpen, onClose }: Props) {
       const { RecaptchaVerifier, signInWithPhoneNumber } = await import('firebase/auth');
 
       // Clear previous recaptcha if any
-      const win = window as unknown as Record<string, unknown>;
+      const win = window as WindowWithRecaptcha;
       if (win.recaptchaVerifier) {
-        (win.recaptchaVerifier as { clear: () => void }).clear();
+        win.recaptchaVerifier.clear();
       }
 
       const verifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });

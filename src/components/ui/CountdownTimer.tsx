@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 
 const TIMER_KEY = 'pl_timer_end';
-// 24 hours in milliseconds: 24 hours * 60 minutes * 60 seconds * 1000 ms
+// 24-hour countdown: resets daily to maintain urgency for the limited-time offer
 const DURATION_MS = 24 * 60 * 60 * 1000;
 
 function getEndTime(): number {

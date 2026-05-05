@@ -3,7 +3,7 @@ import crypto from 'crypto';
 
 export async function POST(req: NextRequest) {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, courseId, userId } = await req.json();
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = await req.json();
 
     const keySecret = process.env.RAZORPAY_KEY_SECRET || '';
 
@@ -18,11 +18,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, message: 'Invalid payment signature' }, { status: 400 });
     }
 
-    // Suppress unused variable warnings
-    void courseId;
-    void userId;
-
-    // TODO: Save enrollment to Firestore
+    // TODO: Save enrollment to Firestore using courseId and userId from request body
     // TODO: Send welcome email via Nodemailer
 
     return NextResponse.json({ success: true, message: 'Payment verified and enrollment successful', paymentId: razorpay_payment_id });
