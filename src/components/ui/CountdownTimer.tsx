@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 
 const TIMER_KEY = 'pl_timer_end';
-const DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
+// 24 hours in milliseconds: 24 hours * 60 minutes * 60 seconds * 1000 ms
+const DURATION_MS = 24 * 60 * 60 * 1000;
 
 function getEndTime(): number {
   if (typeof window === 'undefined') return Date.now() + DURATION_MS;

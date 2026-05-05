@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiX } from 'react-icons/hi';
 import toast from 'react-hot-toast';
+import { type ConfirmationResult } from 'firebase/auth';
 import { useAuthStore } from '@/store/authStore';
 import { User } from '@/types';
 
@@ -16,7 +17,7 @@ export default function AuthModal({ isOpen, onClose }: Props) {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
-  const [confirmationResult, setConfirmationResult] = useState<unknown>(null);
+  const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
   const recaptchaRef = useRef<HTMLDivElement>(null);
   const { setUser, setLoading: setAuthLoading } = useAuthStore();
 
@@ -74,8 +75,7 @@ export default function AuthModal({ isOpen, onClose }: Props) {
     setLoading(true);
     setAuthLoading(true);
     try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const result = await (confirmationResult as any).confirm(otp);
+      const result = await confirmationResult!.confirm(otp);
       const firebaseUser = result.user;
 
       const user: User = {
