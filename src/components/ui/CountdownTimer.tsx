@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 
 const TIMER_KEY = 'pl_timer_end';
-// 24-hour countdown: resets daily to maintain urgency for the limited-time offer
+// 24-hour countdown per session: starts fresh each day. When the countdown expires,
+// getEndTime() sets a new 24-hour window so urgency persists for returning visitors.
 const DURATION_MS = 24 * 60 * 60 * 1000;
 
 function getEndTime(): number {
