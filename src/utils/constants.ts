@@ -183,7 +183,7 @@ export const PARTNER_COMPANIES = [
 
 export const HERO_TEXTS = [
   'We shape your career',
-  'Your background doesn't matter',
+  "Your background doesn't matter",
   'We teach skills, not degrees',
   'Are you looking for a job? We are here for you',
   'We build skills that work in real life',
